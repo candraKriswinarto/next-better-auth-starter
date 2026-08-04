@@ -8,5 +8,15 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
+  },
+  emailVerification: {
+    enabled: true,
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    sendVerificationEmail: async ({ user, token }) => {
+      const url = `${process.env.BETTER_AUTH_URL}/verify-email?token=${token}`;
+      console.log(`[better-auth] Email verification link for ${user.email}: ${url}`);
+    },
   },
 });
