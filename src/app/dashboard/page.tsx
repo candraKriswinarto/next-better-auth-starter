@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { ChangePasswordForm } from "./change-password-form";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -79,6 +80,8 @@ export default function DashboardPage() {
             </div>
           </dl>
         </section>
+
+        <ChangePasswordForm />
       </main>
     </div>
   );
