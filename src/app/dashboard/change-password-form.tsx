@@ -48,75 +48,58 @@ export function ChangePasswordForm() {
     setSuccess(true);
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50";
-
   return (
-    <section className="mt-6 rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
-      <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-        Change password
-      </h2>
+    <section className="status-panel" style={{ marginTop: "var(--space-xl)" }}>
+      <h2>Change password</h2>
 
-      <form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-4" noValidate>
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Current password
-          </span>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4" style={{ marginTop: "var(--space-lg)" }} noValidate>
+        <label className="field">
+          <span className="field__label">Current password</span>
           <input
             type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             placeholder="Your current password"
-            className={inputClass}
+            className="field__input"
             autoComplete="current-password"
             disabled={loading}
           />
         </label>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            New password
-          </span>
+        <label className="field">
+          <span className="field__label">New password</span>
           <input
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="At least 8 characters"
-            className={inputClass}
+            className="field__input"
             autoComplete="new-password"
             disabled={loading}
           />
         </label>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Confirm new password
-          </span>
+        <label className="field">
+          <span className="field__label">Confirm new password</span>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Repeat your new password"
-            className={inputClass}
+            className="field__input"
             autoComplete="new-password"
             disabled={loading}
           />
         </label>
 
         {error && (
-          <p
-            role="alert"
-            className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950 dark:text-red-300"
-          >
+          <p role="alert" className="alert alert--error">
             {error}
           </p>
         )}
 
         {success && (
-          <p
-            role="status"
-            className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700 dark:bg-green-950 dark:text-green-300"
-          >
+          <p role="status" className="alert alert--ok">
             Your password has been updated.
           </p>
         )}
@@ -124,7 +107,7 @@ export function ChangePasswordForm() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 flex h-11 w-full items-center justify-center rounded-lg bg-zinc-900 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          className="btn btn--primary mt-2 w-full"
         >
           {loading ? "Changing…" : "Change password"}
         </button>

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { ChangePasswordForm } from "./change-password-form";
+import { siteConfig } from "@/lib/site";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -16,73 +17,97 @@ export default function DashboardPage() {
 
   if (isPending) {
     return (
-      <div className="flex flex-1 items-center justify-center bg-zinc-50 p-6 dark:bg-black">
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">Loading…</p>
+      <div className="flex min-h-dvh items-center justify-center" style={{ background: "var(--color-paper)" }}>
+        <p style={{ color: "var(--color-muted)", fontSize: "var(--text-sm)" }}>
+          Loading…
+        </p>
       </div>
     );
   }
 
   if (!session) {
     return (
-      <div className="flex flex-1 flex-col items-center justify-center gap-4 bg-zinc-50 p-6 text-center dark:bg-black">
-        <h1 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 text-center" style={{ background: "var(--color-paper)", padding: "var(--space-xl)" }}>
+        <h1 style={{ fontSize: "var(--text-xl)", fontWeight: 600, color: "var(--color-ink)" }}>
           You are not signed in
         </h1>
-        <Link
-          href="/login"
-          className="flex h-11 items-center justify-center rounded-lg bg-zinc-900 px-6 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-        >
-          Log in
+        <Link href="/login" className="btn btn--primary">
+          Sign in
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-1 flex-col bg-zinc-50 p-6 dark:bg-black">
-      <main className="mx-auto w-full max-w-3xl">
-        <header className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-              Dashboard
-            </h1>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              Welcome back, {session.user.name}!
-            </p>
+    <div className="flex min-h-dvh flex-col" style={{ background: "var(--color-paper)" }}>
+      <header className="nav">
+        <div className="nav__inner">
+          <Link href="/" className="nav__brand">
+            <span className="nav__brand-dot" aria-hidden="true" />
+            {siteConfig.name}
+          </Link>
+          <nav className="nav__center" aria-label="Primary">
+            <Link href="/" className="nav__link">
+              Home
+            </Link>
+          </nav>
+          <div className="nav__right">
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="btn btn--outline"
+            >
+              Sign out
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={handleSignOut}
-            className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-900"
-          >
-            Sign out
-          </button>
-        </header>
+        </div>
+      </header>
 
-        <section className="mt-8 rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900">
-          <h2 className="text-sm font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            Your profile
-          </h2>
-          <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+      <main className="flex-1" style={{ padding: "var(--space-2xl) var(--page-gutter)" }}>
+        <div className="mx-auto w-full" style={{ maxWidth: "var(--page-max)" }}>
+          <header className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <dt className="text-sm text-zinc-500 dark:text-zinc-400">Name</dt>
-              <dd className="mt-0.5 font-medium text-zinc-900 dark:text-zinc-50">
-                {session.user.name}
-              </dd>
+              <h1 style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-ink)" }}>
+                Dashboard
+              </h1>
+              <p style={{ marginTop: "var(--space-xs)", fontSize: "var(--text-sm)", color: "var(--color-muted)" }}>
+                Welcome back, {session.user.name}!
+              </p>
             </div>
-            <div>
-              <dt className="text-sm text-zinc-500 dark:text-zinc-400">
-                Email
-              </dt>
-              <dd className="mt-0.5 font-medium text-zinc-900 dark:text-zinc-50">
-                {session.user.email}
-              </dd>
-            </div>
-          </dl>
-        </section>
+          </header>
 
-        <ChangePasswordForm />
+          <section className="status-panel" style={{ marginTop: "var(--space-2xl)" }}>
+            <h2>Your profile</h2>
+            <dl style={{ marginTop: "var(--space-lg)", display: "grid", gap: "var(--space-lg)", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+              <div>
+                <dt style={{ fontSize: "var(--text-sm)", color: "var(--color-muted)" }}>
+                  Name
+                </dt>
+                <dd style={{ marginTop: "var(--space-2xs)", fontWeight: 500, color: "var(--color-ink)" }}>
+                  {session.user.name}
+                </dd>
+              </div>
+              <div>
+                <dt style={{ fontSize: "var(--text-sm)", color: "var(--color-muted)" }}>
+                  Email
+                </dt>
+                <dd style={{ marginTop: "var(--space-2xs)", fontWeight: 500, color: "var(--color-ink)" }}>
+                  {session.user.email}
+                </dd>
+              </div>
+            </dl>
+          </section>
+
+          <ChangePasswordForm />
+        </div>
       </main>
+
+      <footer className="foot-line">
+        <div className="foot-line__inner">
+          <span>© 2026 {siteConfig.name} · MIT licensed</span>
+          <a href={siteConfig.github}>GitHub</a>
+        </div>
+      </footer>
     </div>
   );
 }

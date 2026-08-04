@@ -52,7 +52,7 @@ export function VerifyEmailView() {
 
   if (status === "loading") {
     return (
-      <p className="text-center text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="text-center text-sm" style={{ color: "var(--color-muted)" }}>
         Verifying your email…
       </p>
     );
@@ -60,34 +60,20 @@ export function VerifyEmailView() {
 
   if (status === "error") {
     return (
-      <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-          Verification failed
-        </h1>
-        <p
-          role="alert"
-          className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950 dark:text-red-300"
-        >
+      <div className="flex flex-col gap-4 mt-6">
+        <p role="alert" className="alert alert--error">
           {error}
         </p>
-        <Link
-          href="/login"
-          className="flex h-11 items-center justify-center rounded-lg bg-zinc-900 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-        >
-          Go to login
+        <Link href="/login" className="btn btn--primary w-full">
+          Go to sign in
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-        Email verified
-      </h1>
-      <p className="text-sm text-zinc-600 dark:text-zinc-400">
-        Your email has been verified successfully. Redirecting you…
-      </p>
-    </div>
+    <p className="alert alert--ok mt-6">
+      Your email has been verified successfully. Redirecting you…
+    </p>
   );
 }

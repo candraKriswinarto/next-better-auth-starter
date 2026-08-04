@@ -47,74 +47,49 @@ export function ResetPasswordView() {
     setSuccess(true);
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50";
-
   if (success) {
     return (
-      <div className="flex flex-col gap-4">
-        <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-          Password reset
-        </h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Your password has been updated. You can now log in with your new
-          password.
+      <div className="flex flex-col gap-4 mt-6">
+        <p className="alert alert--ok">
+          Your password has been updated. You can now sign in with your new password.
         </p>
-        <Link
-          href="/login"
-          className="flex h-11 items-center justify-center rounded-lg bg-zinc-900 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-        >
-          Go to login
+        <Link href="/login" className="btn btn--primary w-full">
+          Go to sign in
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-        Reset password
-      </h1>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Enter a new password for your account.
-      </p>
-
-      <form onSubmit={handleSubmit} className="mt-2 flex flex-col gap-4" noValidate>
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            New password
-          </span>
+    <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4" noValidate>
+        <label className="field">
+          <span className="field__label">New password</span>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 8 characters"
-            className={inputClass}
+            className="field__input"
             autoComplete="new-password"
             disabled={loading}
           />
         </label>
 
-        <label className="flex flex-col gap-1.5">
-          <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Confirm password
-          </span>
+        <label className="field">
+          <span className="field__label">Confirm password</span>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Repeat your password"
-            className={inputClass}
+            className="field__input"
             autoComplete="new-password"
             disabled={loading}
           />
         </label>
 
         {error && (
-          <p
-            role="alert"
-            className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950 dark:text-red-300"
-          >
+          <p role="alert" className="alert alert--error">
             {error}
           </p>
         )}
@@ -122,11 +97,10 @@ export function ResetPasswordView() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-2 flex h-11 w-full items-center justify-center rounded-lg bg-zinc-900 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          className="btn btn--primary mt-2 w-full"
         >
           {loading ? "Resetting…" : "Reset password"}
         </button>
       </form>
-    </div>
   );
 }

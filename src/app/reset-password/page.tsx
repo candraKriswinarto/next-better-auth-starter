@@ -1,20 +1,28 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import { ResetPasswordView } from "./reset-password-view";
+import { AuthShell } from "@/components/auth-shell";
 
 export default function ResetPasswordPage() {
   return (
-    <div className="flex flex-1 items-center justify-center bg-zinc-50 p-6 dark:bg-black">
-      <div className="w-full max-w-sm">
-        <Suspense
-          fallback={
-            <p className="text-center text-sm text-zinc-500 dark:text-zinc-400">
-              Loading…
-            </p>
-          }
-        >
-          <ResetPasswordView />
-        </Suspense>
-      </div>
-    </div>
+    <AuthShell
+      title="Reset password"
+      lede="Enter a new password for your account."
+      footer={
+        <>
+          Remembered your password? <Link href="/login">Sign in</Link>
+        </>
+      }
+    >
+      <Suspense
+        fallback={
+          <p className="mt-6 text-center text-sm" style={{ color: "var(--color-muted)" }}>
+            Loading…
+          </p>
+        }
+      >
+        <ResetPasswordView />
+      </Suspense>
+    </AuthShell>
   );
 }
