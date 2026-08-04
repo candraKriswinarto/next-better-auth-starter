@@ -9,6 +9,10 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    sendResetPassword: async ({ user, token }) => {
+      const url = `${process.env.BETTER_AUTH_URL}/reset-password?token=${token}`;
+      console.log(`[better-auth] Password reset link for ${user.email}: ${url}`);
+    },
   },
   emailVerification: {
     enabled: true,
