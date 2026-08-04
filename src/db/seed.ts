@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { db } from "./index";
-import { users } from "./schema";
+import { user } from "./schema";
 
 const dummyUsers = [
   { name: "Alice Johnson", email: "alice@example.com" },
@@ -9,7 +9,10 @@ const dummyUsers = [
 ];
 
 async function main() {
-  const inserted = await db.insert(users).values(dummyUsers).returning();
+  const inserted = await db
+    .insert(user)
+    .values(dummyUsers.map((u) => ({ id: crypto.randomUUID(), ...u })))
+    .returning({ id: user.id, name: user.name, email: user.email });
   console.log(`Seeded ${inserted.length} users:`);
   console.log(inserted);
   process.exit(0);

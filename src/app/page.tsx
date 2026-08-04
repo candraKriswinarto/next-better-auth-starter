@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { user as users } from "@/db/schema";
 
 export const dynamic = "force-dynamic";
 
