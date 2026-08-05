@@ -18,7 +18,7 @@ A minimal, production-ready Next.js starter with Better Auth wired in. Clone it 
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/next-better-auth-starter.git
+git clone https://github.com/candraKriswinarto/next-better-auth-starter.git
 cd next-better-auth-starter
 
 # Install dependencies
